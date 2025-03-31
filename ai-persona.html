@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WeConnect - AI Persona Assistant</title> <!-- Updated Title -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#2563EB"> <!-- WeConnect Primary Color -->
+  <meta name="description" content="WeConnect - AI Persona Assistant for Creators">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WeConnect">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"> <!-- Link external CSS -->
+  <style>
+    /* :root defined in css/style.css */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text-dark);
+      background-color: #f7f7f7; /* Lighter background */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    h1, h2, h3, h4, h5, h6, .heading {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .btn-primary {
+      background-color: var(--weconnect-blue); /* Use WeConnect blue */
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .btn-primary:hover, .btn-primary:active {
+      background-color: #1E40AF; /* Darker blue */
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    /* Loading animation */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(37, 99, 235, 0.1); /* Use primary color with low opacity */
+      border-top-color: var(--weconnect-blue); /* Use WeConnect blue */
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Bottom nav hover animation */
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Center button styles */
+    .center-button {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .center-button:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Chat container */
+    .chat-container {
+      height: calc(100vh - 200px); /* Adjusted height for header and input */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-message {
+      background-color: #E5E7EB; /* Light gray for user */
+      color: #1F2937;
+      margin-left: auto;
+      border-bottom-right-radius: 0.25rem;
+    }
+
+    .ai-message {
+      background-color: var(--weconnect-blue); /* WeConnect blue for AI */
+      color: white;
+      margin-right: auto;
+      border-bottom-left-radius: 0.25rem;
+    }
+
+    .typing-indicator {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .typing-indicator span {
+      display: inline-block;
+      width: 0.3rem;
+      height: 0.3rem;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: typing 1.4s infinite both;
+      margin: 0 0.1rem;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    .chat-input-area { /* Renamed from chat-input */
+      padding: 1rem;
+      background-color: white;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .persona-selector-container { /* Container for the selector */
+       padding: 0.5rem 1rem;
+       background-color: white;
+       border-bottom: 1px solid #E5E7EB;
+    }
+
+    #personaSelector { /* Style the select dropdown */
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid #D1D5DB;
+        background-color: #F9FAFB;
+        font-size: 0.875rem;
+        appearance: none; /* Remove default arrow */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 1.5em 1.5em;
+        cursor: pointer;
+    }
+    #personaSelector:focus {
+        outline: none;
+        border-color: var(--weconnect-blue);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Prevent zoom */
+    * {
+      touch-action: manipulation;
+    }
+  </style>
+  <script>
+    // Prevent zoom on double-tap, pinch
+    document.addEventListener('touchstart', function(event) { if (event.touches.length > 1) event.preventDefault(); }, { passive: false });
+    document.addEventListener('touchmove', function(event) { if (event.touches.length > 1) event.preventDefault(); }, { passive: false });
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) { const now = Date.now(); if (now - lastTouchEnd <= 300) event.preventDefault(); lastTouchEnd = now; }, { passive: false });
+  </script>
+</head>
+
+<body class="bg-gray-100 flex flex-col mx-auto min-h-screen max-w-sm w-full">
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white text-gray-800 p-4 text-lg font-semibold flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center">
+       <img
+        src="https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/file_00000000bd005230bacb28391774673d_conversation_id%3D67ea91f2-f378-800f-8469-b01f42a8bbd5%26message_id%3Dea10fd3a-7df9-43aa-8414-98ba2223f731.webp?alt=media&token=26304d10-4e76-42fe-9081-315200c38bf4"
+        alt="WeConnect Logo"
+        class="w-8 h-8 mr-2"
+      />
+      <h1 class="text-xl font-bold">AI Assistant</h1> <!-- Updated Header Title -->
+    </div>
+    <div class="flex items-center space-x-4"> <!-- Adjusted spacing -->
+      <div class="relative cursor-pointer" onclick="handleNotificationClick()">
+        <span class="material-icons text-2xl text-gray-700">notifications</span>
+        <span id="notificationBadge"
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span> <!-- Adjusted badge position -->
+      </div>
+      <span class="material-icons text-2xl cursor-pointer text-gray-700" id="logoutBtn">logout</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col w-full">
+    <!-- Chat Interface -->
+    <div class="chat-container">
+      <!-- Persona Selector Dropdown -->
+      <div class="persona-selector-container">
+        <select id="personaSelector">
+          <option value="creative_muse">Creative Muse</option>
+          <option value="social_media_maven">Social Media Maven</option>
+          <option value="content_strategist">Content Strategist</option>
+          <option value="brand_ambassador">Brand Ambassador</option>
+          <option value="engagement_guru">Engagement Guru</option>
+          <option value="viral_trendspotter">Viral Trendspotter</option>
+          <option value="community_connector">Community Connector</option>
+          <option value="influencer_narrator">Influencer Narrator</option>
+          <option value="marketing_maestro">Marketing Maestro</option>
+          <option value="lifestyle_curator">Lifestyle Curator</option>
+          <option value="event_storyteller">Event Storyteller</option>
+          <option value="podcast_producer">Podcast Producer</option>
+          <option value="visual_storyteller">Visual Storyteller</option>
+          <option value="trend_translator">Trend Translator</option>
+          <option value="audience_analyst">Audience Analyst</option>
+          <option value="emotional_connector">Emotional Connector</option>
+          <option value="humorist">Humorist</option>
+          <option value="insightful_interviewer">Insightful Interviewer</option>
+          <option value="inspiration_instigator">Inspiration Instigator</option>
+          <option value="collaborative_brainstorm_buddy">Collaborative Brainstorm Buddy</option>
+        </select>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- Initial welcome message will be added by JS -->
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-area">
+        <form id="chatForm" class="flex items-center">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Ask your AI assistant..."
+            class="flex-1 p-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" <!-- Updated focus color -->
+          >
+          <button
+            type="submit"
+            class="btn-primary text-white p-3 rounded-r-lg"
+          >
+            <span class="material-icons">send</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <div class="bg-white border-t border-gray-300 w-full max-w-sm flex justify-around items-center py-2 fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10">
+    <div class="nav-item cursor-pointer" onclick="window.location.href='dashboard.html'"> <!-- Link to dashboard -->
+      <span class="material-icons text-gray-600 text-xl" style="font-size: 1.5em">home</span>
+    </div>
+    <div class="nav-item cursor-pointer" onclick="window.location.href='marketplace.html'"> <!-- Link to marketplace -->
+      <span class="material-icons text-gray-600 text-xl" style="font-size: 1.5em">storefront</span>
+    </div>
+    <div class="center-button cursor-pointer" onclick="window.location.href='apps.html'"> <!-- Link to apps -->
+      <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center shadow-md">
+         <img
+            src="https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/file_00000000bd005230bacb28391774673d_conversation_id%3D67ea91f2-f378-800f-8469-b01f42a8bbd5%26message_id%3Dea10fd3a-7df9-43aa-8414-98ba2223f731.webp?alt=media&token=26304d10-4e76-42fe-9081-315200c38bf4"
+            alt="WeConnect Logo"
+            class="w-8 h-8"
+          />
+      </div>
+    </div>
+    <div class="nav-item cursor-pointer" onclick="window.location.href='network.html'"> <!-- Link to network -->
+      <span class="material-icons text-gray-600 text-xl" style="font-size: 1.5em">group</span>
+    </div>
+    <div class="nav-item cursor-pointer" onclick="window.location.href='profile.html'"> <!-- Link to profile -->
+      <span class="material-icons text-gray-600 text-xl" style="font-size: 1.5em">person</span>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+
+    // Firebase configuration (Keep existing config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtNedkJo6ikNneZZdrheiWbE3Dn2B8kwQ",
+      authDomain: "ces-project-f8b4e.firebaseapp.com",
+      databaseURL: "https://ces-project-f8b4e-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ces-project-f8b4e",
+      storageBucket: "ces-project-f8b4e.firebasestorage.app",
+      messagingSenderId: "580767851656",
+      appId: "1:580767851656:web:2c852e7edb81a6decdeb3d",
+      measurementId: "G-K73DSMWBTP"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // DOM elements
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+    const personaSelector = document.getElementById('personaSelector'); // Get the select element
+
+    // Show loading initially
+    loadingOverlay.classList.add('active');
+
+    // Check authentication state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is signed in:", user.uid);
+        loadingOverlay.classList.remove('active');
+        // Initialize chat with the default persona
+        initializeChat();
+      } else {
+        window.location.href = 'email-login.html';
+      }
+    });
+
+    // Handle logout
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut()
+        .then(() => { window.location.href = 'email-login.html'; })
+        .catch(err => console.error('Logout error:', err));
+    });
+
+    // Function to update notification badge count
+    function updateNotificationBadge(count) {
+      if (count > 0) {
+        notificationBadge.textContent = count;
+        notificationBadge.classList.remove('hidden');
+      } else {
+        notificationBadge.classList.add('hidden');
+      }
+    }
+    // Placeholder for notification logic
+    // updateNotificationBadge(0); // Example: Set initial count
+
+    // Handle notification icon click
+    window.handleNotificationClick = function() { // Make globally accessible
+      window.location.href = 'notifications.html';
+    }
+
+    // --- NEW Persona Agent Configuration ---
+    let currentPersona = 'creative_muse'; // Default persona
+    let chatHistory = []; // Stores { role: 'user'/'model', parts: [{ text: '...' }] }
+
+    const personaWelcomes = {
+        creative_muse: "I'm your Creative Muse! Ready to spark some imagination? What masterpiece shall we conjure up today?",
+        social_media_maven: "Social Media Maven reporting for duty! Let's craft some posts that pop. What's the plan?",
+        content_strategist: "Content Strategist here. Let's map out your next big hit. What are your goals?",
+        brand_ambassador: "Your Brand Ambassador at your service. How can we make your brand voice shine today?",
+        engagement_guru: "Engagement Guru online! Ready to boost those interactions? What's on your mind?",
+        viral_trendspotter: "Viral Trendspotter activated. What's buzzing? Let's catch the next wave!",
+        community_connector: "Community Connector checking in. How can I help you build bridges today?",
+        influencer_narrator: "Your Influencer Narrator is ready. Let's tell your story. What's the vibe?",
+        marketing_maestro: "Marketing Maestro here. Let's craft some compelling copy. What are we promoting?",
+        lifestyle_curator: "Lifestyle Curator reporting. What aspect of life are we exploring today?",
+        event_storyteller: "Event Storyteller ready to capture the moment. What's the occasion?",
+        podcast_producer: "Podcast Producer online. Ready to outline your next episode? What's the topic?",
+        visual_storyteller: "Visual Storyteller here. Let's paint a picture with words (or ideas for images!). What story do you want to tell visually?",
+        trend_translator: "Trend Translator ready. Let's make sense of what's hot. What trend are you curious about?",
+        audience_analyst: "Audience Analyst reporting. Let's dive into what your audience wants. Any specific group in mind?",
+        emotional_connector: "Emotional Connector here. Ready to build deeper connections? How can I help?",
+        humorist: "Your resident Humorist! Ready to tickle some funny bones? What needs a comedic touch?",
+        insightful_interviewer: "Insightful Interviewer ready. Who are we talking to, and what do we want to uncover?",
+        inspiration_instigator: "Inspiration Instigator online! Feeling stuck? Let's brainstorm some fresh ideas!",
+        collaborative_brainstorm_buddy: "Brainstorm Buddy activated! Let's bounce some ideas around. What are we thinking about?"
+    };
+
+    const personaPrompts = {
+        creative_muse: "Tool: Creative Muse. Task: Inspire creative storytelling and artistic expressions.",
+        social_media_maven: "Tool: Social Media Maven. Task: Generate tailored social media posts and engaging captions.",
+        content_strategist: "Tool: Content Strategist. Task: Develop comprehensive content outlines and editorial calendars.",
+        brand_ambassador: "Tool: Brand Ambassador. Task: Craft brand-specific tone and voice for campaigns.",
+        engagement_guru: "Tool: Engagement Guru. Task: Create interactive content ideas and engagement tactics.",
+        viral_trendspotter: "Tool: Viral Trendspotter. Task: Analyze trends and suggest ideas for viral posts.",
+        community_connector: "Tool: Community Connector. Task: Develop scripts for community interactions and event promotions.",
+        influencer_narrator: "Tool: Influencer Narrator. Task: Generate personal anecdotes and influencer-style narratives.",
+        marketing_maestro: "Tool: Marketing Maestro. Task: Design persuasive copy for ads and promotional content.",
+        lifestyle_curator: "Tool: Lifestyle Curator. Task: Craft content around lifestyle and culture tailored to your audience.",
+        event_storyteller: "Tool: Event Storyteller. Task: Create engaging narratives for live events and webinars.",
+        podcast_producer: "Tool: Podcast Producer. Task: Outline and script engaging podcast episodes.",
+        visual_storyteller: "Tool: Visual Storyteller. Task: Generate ideas for image-driven posts and visual campaigns.",
+        trend_translator: "Tool: Trend Translator. Task: Adapt current trends into relatable content personas.",
+        audience_analyst: "Tool: Audience Analyst. Task: Provide content recommendations based on audience profiling.",
+        emotional_connector: "Tool: Emotional Connector. Task: Craft empathetic responses and audience-focused narratives.",
+        humorist: "Tool: Humorist. Task: Inject humor and witty banter into creative content.",
+        insightful_interviewer: "Tool: Insightful Interviewer. Task: Develop engaging interview questions and conversational scripts.",
+        inspiration_instigator: "Tool: Inspiration Instigator. Task: Spark fresh ideas for creative projects.",
+        collaborative_brainstorm_buddy: "Tool: Collaborative Brainstorm Buddy. Task: Facilitate idea exchange and creative co-writing sessions."
+    };
+    // --- END NEW Persona Agent Configuration ---
+
+    // Function to initialize or reset the chat
+    function initializeChat() {
+        currentPersona = personaSelector.value; // Get selected value from dropdown
+        chatHistory = []; // Clear history
+        chatMessages.innerHTML = ''; // Clear messages visually
+
+        const welcomeMessage = personaWelcomes[currentPersona];
+        addMessageToChat('model', welcomeMessage); // Use 'model' role for Gemini
+
+        // Add welcome message to history (as the first model message)
+        chatHistory.push({ role: "model", parts: [{ text: welcomeMessage }] });
+    }
+
+    // Handle chat form submission
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      userInput.value = ''; // Clear input
+      addMessageToChat('user', message); // Add user message visually
+      chatHistory.push({ role: "user", parts: [{ text: message }] }); // Add user message to history
+
+      const typingIndicator = addTypingIndicator(); // Show typing
+
+      try {
+        const responseText = await callGeminiAPI(); // Call the updated API function
+        typingIndicator.remove(); // Remove typing
+        addMessageToChat('model', responseText); // Add AI response visually
+        chatHistory.push({ role: "model", parts: [{ text: responseText }] }); // Add AI response to history
+        scrollToBottom();
+      } catch (error) {
+        console.error('Error calling Gemini API:', error);
+        typingIndicator.remove();
+        addMessageToChat('model', `Sorry, I encountered an error: ${error.message}. Please try again.`);
+      }
+    });
+
+    // Handle persona selection change
+    personaSelector.addEventListener('change', () => {
+        initializeChat(); // Reset chat when persona changes
+    });
+
+    // Function to add message to chat visually
+    function addMessageToChat(senderRole, message) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      // Use 'user-message' for 'user', 'ai-message' for 'model'
+      messageElement.classList.add(senderRole === 'user' ? 'user-message' : 'ai-message');
+
+      const messageText = document.createElement('p');
+      // Basic Markdown rendering (bold, italics) - can be expanded
+      messageText.innerHTML = message
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+          .replace(/\*(.*?)\*/g, '<em>$1</em>');       // Italics
+      messageElement.appendChild(messageText);
+      chatMessages.appendChild(messageElement);
+      scrollToBottom();
+    }
+
+    // Function to add typing indicator
+    function addTypingIndicator() {
+      const typingElement = document.createElement('div');
+      typingElement.classList.add('message', 'ai-message');
+      const typingIndicator = document.createElement('div');
+      typingIndicator.classList.add('typing-indicator');
+      typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+      typingElement.appendChild(typingIndicator);
+      chatMessages.appendChild(typingElement);
+      scrollToBottom();
+      return typingElement;
+    }
+
+    // Function to scroll chat to bottom
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // --- NEW Gemini API Call Function ---
+    async function callGeminiAPI() {
+        const API_KEY = "AIzaSyARaajkWXs2JedWRTYYJBzEKq9GVqZN_K0"; // Use provided key
+        const MODEL_ID = "gemini-2.5-pro-exp-03-25"; // Use the more capable model
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_ID}:streamGenerateContent?key=${API_KEY}&alt=sse`; // Use streaming endpoint
+
+        // Construct the prompt including the persona system instruction
+        const systemInstruction = personaPrompts[currentPersona];
+
+        // Format chat history for Gemini API
+        // The system instruction should ideally be the first message if the API supports it,
+        // or prepended to the first user message if not directly supported as a 'system' role.
+        // Gemini's newer APIs might support a 'system' role or specific instruction parameter.
+        // Let's try adding it as the first 'model' turn instruction for context, then the history.
+        // Note: Gemini API expects alternating user/model roles.
+
+        const contents = [];
+
+        // Add system prompt as the initial context (pretending it's from the model)
+        // This might need adjustment based on exact Gemini API behavior for system prompts.
+        contents.push({ role: "user", parts: [{ text: systemInstruction + "\n\nOkay, I am ready. What is the user's request?" }] });
+        contents.push({ role: "model", parts: [{ text: "Understood. I will act as the " + currentPersona.replace(/_/g, ' ') + ". Please provide the user's message." }] });
+
+
+        // Add the actual chat history, ensuring alternating roles
+        let lastRole = 'model'; // Start assuming the system prompt setup was the last model turn
+        chatHistory.forEach(turn => {
+            // Skip if the role is the same as the last one to maintain alternation
+            if (turn.role !== lastRole) {
+                contents.push(turn);
+                lastRole = turn.role;
+            } else {
+                // If consecutive roles, try merging parts (simple text merge)
+                // This is a basic way to handle potential consecutive messages.
+                // A more robust solution might be needed depending on API strictness.
+                if (contents.length > 0) {
+                    const lastContent = contents[contents.length - 1];
+                    if (lastContent.role === turn.role && lastContent.parts && turn.parts) {
+                       // Simple text concatenation
+                       const lastPartText = lastContent.parts[0]?.text || "";
+                       const currentPartText = turn.parts[0]?.text || "";
+                       lastContent.parts[0].text = lastPartText + "\n" + currentPartText;
+                    } else {
+                         // If roles match but structure differs, just push (might cause API error)
+                         contents.push(turn);
+                         lastRole = turn.role;
+                    }
+                } else {
+                     contents.push(turn);
+                     lastRole = turn.role;
+                }
+            }
+        });
+
+        // Ensure the last message is from the 'user' role before sending
+        if (contents.length > 0 && contents[contents.length - 1].role === 'model') {
+           // If the last message was the model's, we might need to add a placeholder user message
+           // or reconsider the logic. For now, we'll proceed, but the API might expect a user turn last.
+           console.warn("Last message in history is from the model. Sending as is.");
+        }
+
+
+        const requestBody = {
+            contents: contents,
+            // Add generationConfig if needed (e.g., temperature, max output tokens)
+            generationConfig: {
+                // "responseMimeType": "text/plain", // Not needed for streamGenerateContent SSE
+                "temperature": 0.7,
+                "maxOutputTokens": 1024,
+            },
+             // Add tools if needed, like googleSearch
+             "tools": [
+               // { "googleSearch": {} } // Example if search is needed
+             ]
+        };
+
+        console.log("Sending to Gemini:", JSON.stringify(requestBody, null, 2)); // Log request for debugging
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error("Gemini API Error Response:", errorBody);
+            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+        }
+
+        // Process the SSE stream
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullResponse = '';
+        let buffer = '';
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+
+            // Process buffer line by line for SSE events
+            let lines = buffer.split('\n');
+            buffer = lines.pop(); // Keep the potentially incomplete last line
+
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    try {
+                        const jsonString = line.substring(6); // Remove 'data: ' prefix
+                        const chunk = JSON.parse(jsonString);
+                        if (chunk.candidates && chunk.candidates[0].content && chunk.candidates[0].content.parts) {
+                            fullResponse += chunk.candidates[0].content.parts[0].text;
+                        }
+                    } catch (e) {
+                        console.warn("Failed to parse SSE chunk:", line, e);
+                    }
+                }
+            }
+        }
+         // Process any remaining buffer content
+         if (buffer.startsWith('data: ')) {
+             try {
+                 const jsonString = buffer.substring(6);
+                 const chunk = JSON.parse(jsonString);
+                 if (chunk.candidates && chunk.candidates[0].content && chunk.candidates[0].content.parts) {
+                     fullResponse += chunk.candidates[0].content.parts[0].text;
+                 }
+             } catch (e) {
+                 console.warn("Failed to parse final SSE buffer:", buffer, e);
+             }
+         }
+
+
+        console.log("Gemini Full Response:", fullResponse); // Log full response
+        return fullResponse.trim(); // Return the complete text
+    }
+    // --- END NEW Gemini API Call Function ---
+
+  </script>
+</body>
+</html>

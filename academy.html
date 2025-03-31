@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Academy - Weconnect</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --magnetar-red: #C00000;
+      --text-dark: #1A1A1A;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f5f5f5;
+      color: var(--text-dark);
+      padding-bottom: 70px;
+      padding-top: 70px;
+      max-width: 100%;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    h1, h2, h3, h4, h5, h6, .heading {
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    /* Sticky Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      padding: 16px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Header Logo and Icons */
+    .header-logo-container {
+      position: absolute;
+      left: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-logo-container div {
+      width: 32px;
+      height: 32px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+    
+    .header-logo-text {
+      margin-left: 8px;
+      font-weight: 600;
+    }
+    
+    .header-icons-right {
+      position: absolute;
+      right: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .header-icons-right .material-icons {
+      font-size: 1.5em;
+      color: #555;
+    }
+    
+    .header-icons-right .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--magnetar-red);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 50%;
+      display: none;
+    }
+    
+    .main-content {
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+    
+    .featured-banner {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .featured-banner:active {
+      transform: scale(0.98);
+    }
+    
+    .featured-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .featured-banner-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 25px 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+    }
+    
+    .featured-tag {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    
+    .featured-banner-content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .featured-banner-content p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    
+    .featured-banner-content .author {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+    
+    .featured-banner-content .date {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .category-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-card i {
+      font-size: 2rem;
+      color: var(--magnetar-red);
+      margin-bottom: 10px;
+    }
+    
+    .category-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .category-card p {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    .courses-list {
+      margin-bottom: 30px;
+    }
+    
+    .course-card {
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .course-card-content {
+      display: flex;
+    }
+    
+    .course-thumbnail {
+      width: 120px;
+      height: 100px;
+      overflow: hidden;
+    }
+    
+    .course-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .course-details {
+      flex: 1;
+      padding: 15px;
+    }
+    
+    .course-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .course-description {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .course-author {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 5px;
+    }
+    
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .course-date {
+      font-size: 0.75rem;
+      color: #999;
+    }
+    
+    .watch-button {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .watch-button:hover {
+      background-color: #a00000;
+    }
+    
+    .live-session {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .live-session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .live-session-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    
+    .live-session-instructor {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .live-session-tag {
+      background-color: #ffebee;
+      color: var(--magnetar-red);
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    
+    .live-session-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .live-session-time {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .reminder-button {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 0.9rem;
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .reminder-button:hover {
+      background-color: #a00000;
+    }
+    
+    /* Fixed Bottom Navbar */
+    .bottom-nav {
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    
+    .bottom-nav .nav-item {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .bottom-nav .nav-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .bottom-nav .center-button-nav {
+      background-color: transparent !important;
+      box-shadow: none;
+      transform: translateY(-10px);
+      transition: transform 0.3s ease;
+    }
+    
+    .bottom-nav .center-button-nav:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+    
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      flex-direction: column;
+    }
+    
+    .video-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .video-player {
+      width: 100%;
+      max-height: 80vh;
+    }
+    
+    .video-controls {
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #111;
+    }
+    
+    .video-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    
+    .close-video {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(192, 0, 0, 0.1);
+      border-top-color: var(--magnetar-red);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Prevent zoom on mobile */
+    @media (max-width: 768px) {
+      body {
+        touch-action: pan-y;
+      }
+    }
+  </style>
+  <script>
+    // Prevent zooming on mobile devices
+    document.addEventListener('touchstart', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+    
+    document.addEventListener('touchmove', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+    
+    // Prevent double-tap zoom
+    // let lastTouchEnd = 0; // Removed duplicate declaration
+    document.addEventListener('touchend', function(event) {
+      // This listener is also duplicated at the end of the body, removing this one.
+      // const now = Date.now();
+      // if (now - lastTouchEnd <= 300) {
+      //   event.preventDefault();
+      // }
+      // lastTouchEnd = now;
+    }, { passive: false });
+  </script>
+</head>
+<body>
+  <!-- Loading overlay -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Academy - Weconnect</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --magnetar-red: #C00000;
+      --text-dark: #1A1A1A;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f5f5f5;
+      color: var(--text-dark);
+      padding-bottom: 70px;
+      padding-top: 70px;
+      max-width: 100%;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    h1, h2, h3, h4, h5, h6, .heading {
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    /* Sticky Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      padding: 16px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Header Logo and Icons */
+    .header-logo-container {
+      position: absolute;
+      left: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-logo-container div {
+      width: 32px;
+      height: 32px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+    
+    .header-logo-text {
+      margin-left: 8px;
+      font-weight: 600;
+    }
+    
+    .header-icons-right {
+      position: absolute;
+      right: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .header-icons-right .material-icons {
+      font-size: 1.5em;
+      color: #555;
+    }
+    
+    .header-icons-right .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--magnetar-red);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 50%;
+      display: none;
+    }
+    
+    .main-content {
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+    
+    .featured-banner {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .featured-banner:active {
+      transform: scale(0.98);
+    }
+    
+    .featured-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .featured-banner-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 25px 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+    }
+    
+    .featured-tag {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    
+    .featured-banner-content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .featured-banner-content p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    
+    .featured-banner-content .author {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+    
+    .featured-banner-content .date {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .category-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-card i {
+      font-size: 2rem;
+      color: var(--magnetar-red);
+      margin-bottom: 10px;
+    }
+    
+    .category-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .category-card p {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    .courses-list {
+      margin-bottom: 30px;
+    }
+    
+    .course-card {
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .course-card-content {
+      display: flex;
+    }
+    
+    .course-thumbnail {
+      width: 120px;
+      height: 100px;
+      overflow: hidden;
+    }
+    
+    .course-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .course-details {
+      flex: 1;
+      padding: 15px;
+    }
+    
+    .course-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .course-description {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .course-author {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 5px;
+    }
+    
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .course-date {
+      font-size: 0.75rem;
+      color: #999;
+    }
+    
+    .watch-button {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .watch-button:hover {
+      background-color: #a00000;
+    }
+    
+    .live-session {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .live-session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .live-session-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    
+    .live-session-instructor {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .live-session-tag {
+      background-color: #ffebee;
+      color: var(--magnetar-red);
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    
+    .live-session-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .live-session-time {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .reminder-button {
+      background-color: var(--magnetar-red);
+      color: white;
+      font-size: 0.9rem;
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .reminder-button:hover {
+      background-color: #a00000;
+    }
+    
+    /* Fixed Bottom Navbar */
+    .bottom-nav {
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    
+    .bottom-nav .nav-item {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .bottom-nav .nav-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .bottom-nav .center-button-nav {
+      background-color: transparent !important;
+      box-shadow: none;
+      transform: translateY(-10px);
+      transition: transform 0.3s ease;
+    }
+    
+    .bottom-nav .center-button-nav:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+    
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      flex-direction: column;
+    }
+    
+    .video-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .video-player {
+      width: 100%;
+      max-height: 80vh;
+    }
+    
+    .video-controls {
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #111;
+    }
+    
+    .video-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    
+    .close-video {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(192, 0, 0, 0.1);
+      border-top-color: var(--magnetar-red);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Prevent zoom on mobile */
+    @media (max-width: 768px) {
+      body {
+        touch-action: pan-y;
+      }
+    }
+  </style>
+  <script>
+    // Prevent zooming on mobile devices
+    document.addEventListener('touchstart', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+    
+    document.addEventListener('touchmove', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+
+    // Removed duplicate touchend listener from head
+  </script>
+</head>
+<body>
+  <!-- Loading overlay -->
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+  </script>
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <!-- Header Logo (Left) -->
+    <div class="header-logo-container">
+      <div style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/20250127_191600_0000-6AwFlDvh6mQeKcJJwH3Jlyef5Qpeic.png');"></div>
+      <span class="header-logo-text">MAGNETAR</span>
+    </div>
+    <!-- Center Title -->
+    <h1>Academy</h1>
+    <!-- Header Icons (Right) -->
+    <div class="header-icons-right">
+      <div class="cursor-pointer" onclick="window.location.href='notifications.html'">
+        <span class="material-icons">notifications</span>
+        <span id="notificationBadge" class="badge">0</span>
+      </div>
+      <div class="cursor-pointer ml-4" onclick="window.location.href='message.html'">
+        <span class="material-icons">email</span>
+        <span id="messageBadge" class="badge">0</span>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Featured Banner -->
+    <div id="featuredBanner" class="featured-banner">
+      <!-- Will be populated by JavaScript -->
+    </div>
+    
+    <!-- Categories Section -->
+    <div class="categories-section">
+      <h2 class="section-title">Categories</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <i class="material-icons" style="color: #C00000;">school</i>
+          <h3>Orientation</h3>
+          <p>2 courses</p>
+        </div>
+        <div class="category-card">
+          <i class="material-icons" style="color: #C00000;">trending_up</i>
+          <h3>Marketing</h3>
+          <p>2 courses</p>
+        </div>
+        <div class="category-card">
+          <i class="material-icons" style="color: #C00000;">psychology</i>
+          <h3>Mindset</h3>
+          <p>2 courses</p>
+        </div>
+        <div class="category-card">
+          <i class="material-icons" style="color: #C00000;">emoji_events</i>
+          <h3>Recognition</h3>
+          <p>2 courses</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Courses Section -->
+    <div class="courses-section">
+      <div class="courses-header">
+        <h2 class="section-title">All Courses</h2>
+      </div>
+      <div id="coursesList" class="courses-list">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+    
+    <!-- Live Session Section -->
+    <div class="live-session-section">
+      <h2 class="section-title">Upcoming Live Sessions</h2>
+      <div class="live-session">
+        <div class="live-session-header">
+          <div>
+            <div class="live-session-title">Advanced Recruiting Strategies</div>
+            <div class="live-session-instructor">With John Smith, Senior Mentor</div>
+          </div>
+          <div class="live-session-tag">Tomorrow</div>
+        </div>
+        <div class="live-session-footer">
+          <div class="live-session-time">
+            <span class="material-icons">schedule</span>
+            <span>8:00 PM</span>
+          </div>
+          <button id="reminderButton" class="reminder-button">Set Reminder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-container">
+      <video id="videoPlayer" class="video-player" controls></video>
+    </div>
+    <div class="video-controls">
+      <div class="video-title" id="videoTitle">Video Title</div>
+      <button class="close-video" id="closeVideo">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='social.html'">
+      <span class="material-icons" style="font-size: 1.5em;">people</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='wallet.html'">
+      <span class="material-icons" style="font-size: 1.5em;">account_balance_wallet</span>
+    </div>
+    <div class="center-button-nav nav-item" onclick="window.location.href='index.html'">
+      <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center shadow-md">
+        <div class="w-8 h-8 bg-contain bg-center bg-no-repeat" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/20250127_191600_0000-6AwFlDvh6mQeKcJJwH3Jlyef5Qpeic.png');"></div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="material-icons" style="font-size: 1.5em; color: var(--magnetar-red);">school</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='settings.html'">
+      <span class="material-icons" style="font-size: 1.5em;">settings</span>
+    </div>
+  </div>
+  
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script>
+    // Initialize Firebase with your config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiEpH2Mh_BKbCxkrXnZxWGPnzndPEz8zg",
+      authDomain: "ces-project-f8b4e.firebaseapp.com",
+      projectId: "ces-project-f8b4e",
+      storageBucket: "ces-project-f8b4e.appspot.com",
+      messagingSenderId: "456811518432",
+      appId: "1:456811518432:web:e4f5a9e6c2a152bb7c9977",
+      measurementId: "G-RLNBFCV0Q3"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    
+    // DOM Elements
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const featuredBanner = document.getElementById('featuredBanner');
+    const coursesList = document.getElementById('coursesList');
+    const videoModal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoTitle = document.getElementById('videoTitle');
+    const closeVideo = document.getElementById('closeVideo');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const reminderButton = document.getElementById('reminderButton');
+    
+    // Show loading initially
+    loadingOverlay.classList.add('active');
+    
+    // Check authentication state
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        console.log("User is signed in:", user.uid);
+        
+        // Check for notifications
+        checkNotifications(user.uid);
+        
+        // Load courses
+        loadCourses();
+      } else {
+        // User is signed out, redirect to login
+        window.location.href = 'email-login.html';
+      }
+    });
+    
+    // Check for notifications
+    function checkNotifications(userId) {
+      // Simulate notification check
+      setTimeout(() => {
+        const hasNotifications = Math.random() > 0.5;
+        if (hasNotifications) {
+          const count = Math.floor(Math.random() * 5) + 1;
+          const notificationBadge = document.getElementById('notificationBadge');
+          notificationBadge.textContent = count;
+          notificationBadge.style.display = 'flex';
+          
+          const messageBadge = document.getElementById('messageBadge');
+          if (Math.random() > 0.5) {
+            const messageCount = Math.floor(Math.random() * 3) + 1;
+            messageBadge.textContent = messageCount;
+            messageBadge.style.display = 'flex';
+          }
+        }
+      }, 2000);
+    }
+    
+    // Use the provided course data directly
+    const coursesData = {
+      "-OL81xNAbgzqrKSm3_Al": {
+        "active": false,
+        "author": "Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-12T22:29:52.665Z",
+        "description": "Learn to the 1st step how to earn in our Digital Marketing",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741815464732_Ghen%20Posters%20ghen%20-%20ALL%20POSTERS%20-%20No%20Dates%20(32).png?alt=media&token=d1e742dd-9ae3-41ca-bb04-d661f650920c",
+        "title": "Team Magnetar New Distributor Orientation Part 1",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741815464732_NDO%201%20feb%2015%202025%20lowe%20resolution.mp4?alt=media&token=b7a719d0-305b-4d23-afef-bce66b2ef29a"
+      },
+      "-OL8FskF3YPH5141HQ_A": {
+        "active": false,
+        "author": "By: Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-12T23:30:43.811Z",
+        "description": "Learn to the 1st step how to earn in our Digital Marketing",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741821058591_Ghen%20Posters%20ghen%20-%20ALL%20POSTERS%20-%20No%20Dates%20(1).png?alt=media&token=fd9b07a2-964b-4421-b77e-74bac5249a9f",
+        "title": "Team Magnetar New Distributor Orientation Part 2",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741821058591_NDO%202%20feb%2017%202025.mp4?alt=media&token=df400e53-0cf0-4371-a28d-26246dac2f71"
+      },
+      "-OL8JmD5n5OxC3SSN2qx": {
+        "active": false,
+        "author": "LAW OF ATTRACTION",
+        "created_at": "2025-03-12T23:47:45.625Z",
+        "description": "Learn how to use the secret of  Power of law of Attraction",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741823165095_th.jpg?alt=media&token=d489064c-0408-4eec-b029-d2048bab1a5a",
+        "title": "The Secret The Law of Attraction",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741823165095_thesecret.mp4?alt=media&token=3585fcd5-44a3-4d3d-8d38-0cba40cd6229"
+      },
+      "-OL8STXWltha_Q5WHfOw": {
+        "active": false,
+        "author": "By: Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-13T00:25:44.308Z",
+        "description": "Learn the Basic Online Marketing how to start and become expert in Digital Marketing",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741824221766_Ghen%20Posters%20ghen%20-%20ALL%20POSTERS%20-%20No%20Dates%20(11).png?alt=media&token=ccc7465e-aa5a-40bf-90a6-9b8d77f59f60",
+        "title": "BASIC ONLINE MARKETING",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741824221766_BASIC%20ONLINE%20MARKETING%20feb%2010%202025.mp4?alt=media&token=c65c0b63-082a-4951-bf5a-01eb409cac06"
+      },
+      "-OL8ngf-LdpZfO5lanZx": {
+        "active": false,
+        "author": "Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-13T02:02:49.363Z",
+        "description": "Awarding nights for the Top Performer of Team Magnetar (STARMATES)",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741827786977_1.)%20%20December%202022%20-%20MAGNETAR%20Top%20Performers%20(26).png?alt=media&token=e303d019-06e1-48b2-965c-588e22ce478c",
+        "title": "January Team Magnetar Recognition of Stars ",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741827786977_Team%20MagnetarJanuary%20Top%20Performer.mp4?alt=media&token=83d4d6ab-cb4f-4ebf-9148-97ef4f4dbb49"
+      },
+      "-OL8yA9dDmLBC6E1mpVh": {
+        "active": false,
+        "author": "By: Genesis THE \"MAGNETAR\" Domingo",
+        "created_at": "2025-03-13T02:48:35.709Z",
+        "description": "Awarding nights for the Top Performer of Team Magnetar (STARMATES)",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1741833484654_1.)%20%20December%202022%20-%20MAGNETAR%20Top%20Performers%20(77).png?alt=media&token=f7e3efe5-f821-4821-9847-de65af41c22e",
+        "title": "February Team Magnetar Recognition of Stars",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1741833484654_february%20recognition%20of%20stars.mp4?alt=media&token=36ff987f-1cad-441e-af76-81adc6bb6f8c"
+      },
+      "-OLZoZu3-pwG7FyWdJL6": {
+        "active": false,
+        "author": "By: Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-18T07:56:21.249Z",
+        "description": "Learn the Principle's of the Successful people ",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1742284135356_Ghen%20Posters%20ghen%20-%20ALL%20POSTERS%20-%20No%20Dates%20(32).png?alt=media&token=5ac57967-d8e8-467c-8402-06de8480e78c",
+        "title": "Principles of Success",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1742284135356_prinsiple%20of%20success.mp4?alt=media&token=e9f11302-c948-4ef9-bc5d-c200fdf34f7e"
+      },
+      "-OLZuBI4wpTZzRfb7DmO": {
+        "active": false,
+        "author": "By: Genesis THE MAGNETAR Domingo",
+        "created_at": "2025-03-18T08:20:53.314Z",
+        "description": "Learn the financial literacy and how to maximized your income potential.",
+        "image_thumbnail": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/thumbnail%2F1742284880955_Ghen%20Posters%20ghen%20-%20ALL%20POSTERS%20-%20No%20Dates%20(52).png?alt=media&token=db112526-cae2-4675-9bac-9f671c5cc721",
+        "title": "Maximizing your Income Potential",
+        "video_url": "https://firebasestorage.googleapis.com/v0/b/ces-project-f8b4e.firebasestorage.app/o/course-video%2F1742284880955_maximizing%20your%20income%20potential%20Introduction.mp4?alt=media&token=0840ebb4-f57b-460e-8e88-bf205e4016ad"
+      }
+    };
+    
+    // Load courses
+    function loadCourses() {
+      // Convert to array and sort by created_at (newest first)
+      const coursesArray = Object.entries(coursesData).map(([id, course]) => {
+        return { id, ...course };
+      }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      
+      // Display featured course (newest course)
+      if (coursesArray.length > 0) {
+        const featuredCourse = coursesArray[0];
+        
+        // Set featured banner
+        featuredBanner.innerHTML = `
+          <img src="${featuredCourse.image_thumbnail}" alt="${featuredCourse.title}">
+          <div class="featured-banner-content">
+            <div class="featured-tag">FEATURED</div>
+            <h2>${featuredCourse.title}</h2>
+            <p>${featuredCourse.description}</p>
+            <div class="author">${featuredCourse.author}</div>
+            <div class="date">Added: ${formatDate(featuredCourse.created_at)}</div>
+          </div>
+        `;
+        
+        // Add click event to featured banner
+        featuredBanner.addEventListener('click', function() {
+          openVideoPlayer(featuredCourse.video_url, featuredCourse.title);
+        });
+        
+        // Update courses count in header
+        const coursesHeader = document.querySelector('.courses-header');
+        coursesHeader.innerHTML = `
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="section-title">All Courses</h2>
+            <span style="color: #C00000; font-size: 0.9rem; font-weight: 500;">${coursesArray.length} courses</span>
+          </div>
+        `;
+        
+        // Display all courses (excluding featured)
+        displayCourses(coursesArray.slice(1));
+      }
+      
+      // Hide loading
+      loadingOverlay.classList.remove('active');
+    }
+    
+    // Display courses
+    function displayCourses(courses) {
+      // Clear existing courses
+      coursesList.innerHTML = '';
+      
+      // Display courses
+      courses.forEach(course => {
+        const courseCard = document.createElement('div');
+        courseCard.className = 'course-card';
+        courseCard.innerHTML = `
+          <div class="course-card-content">
+            <div class="course-thumbnail">
+              <img src="${course.image_thumbnail}" alt="${course.title}">
+            </div>
+            <div class="course-details">
+              <h3 class="course-title">${course.title}</h3>
+              <p class="course-description">${course.description}</p>
+              <div class="course-author">${course.author}</div>
+              <div class="course-meta">
+                <div class="course-date">${formatDate(course.created_at)}</div>
+                <button class="watch-button">Watch</button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add click event to course card
+        courseCard.addEventListener('click', function() {
+          openVideoPlayer(course.video_url, course.title);
+        });
+        
+        // Add click event to watch button
+        const watchButton = courseCard.querySelector('.watch-button');
+        watchButton.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent triggering the card click
+          openVideoPlayer(course.video_url, course.title);
+        });
+        
+        coursesList.appendChild(courseCard);
+      });
+    }
+    
+    // Format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+    
+    // Open video player
+    function openVideoPlayer(videoUrl, title) {
+      videoPlayer.src = videoUrl;
+      videoTitle.textContent = title;
+      videoModal.style.display = 'flex';
+      videoPlayer.play();
+    }
+    
+    // Close video player
+    closeVideo.addEventListener('click', function() {
+      videoPlayer.pause();
+      videoPlayer.src = '';
+      videoModal.style.display = 'none';
+    });
+    
+    // Set reminder for live session
+    reminderButton.addEventListener('click', function() {
+      this.textContent = 'Reminder Set';
+      this.style.backgroundColor = '#888';
+      this.disabled = true;
+      alert('Reminder set for Advanced Recruiting Strategies tomorrow at 8:00 PM');
+    });
+    
+    // Prevent zooming on mobile devices
+    document.addEventListener('touchmove', function(event) {
+      if (event.scale !== 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+    
+    // Prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+  </script>
+</body>
+</html>
