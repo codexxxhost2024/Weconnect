@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WeConnect Learning Center - Expand your knowledge">
+    <title>Learn | WeConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E9CCA;
+            --secondary-color: #4CAF50;
+            --accent-color: #25274D;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --dark-bg: #29648A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            padding-bottom: 70px; /* Space for bottom navbar */
+            position: relative;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .category {
+            background-color: var(--light-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .category.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .featured-courses {
+            margin-bottom: 30px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        .course-image {
+            height: 150px;
+            background-color: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .course-content {
+            padding: 15px;
+        }
+        
+        .course-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .course-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .course-rating i {
+            color: #FFD700;
+            margin-right: 5px;
+        }
+        
+        .course-progress {
+            width: 100%;
+            height: 6px;
+            background-color: var(--light-bg);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .popular-courses {
+            margin-bottom: 30px;
+        }
+        
+        .course-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+        }
+        
+        .course-item {
+            min-width: 200px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-item-image {
+            height: 100px;
+            background-color: var(--light-bg);
+        }
+        
+        .course-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .course-item-content {
+            padding: 10px;
+        }
+        
+        .course-item-title {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .course-item-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Include header and navbar -->
+        <div id="header-navbar"></div>
+        
+        <div class="content">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search courses...">
+            </div>
+            
+            <div class="categories">
+                <div class="category active">All</div>
+                <div class="category">Community Building</div>
+                <div class="category">Leadership</div>
+                <div class="category">Digital Skills</div>
+                <div class="category">Volunteering</div>
+                <div class="category">Sustainability</div>
+            </div>
+            
+            <div class="featured-courses">
+                <div class="section-title">
+                    <h2>Continue Learning</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://source.unsplash.com/random/400x200/?community" alt="Course Image">
+                        <div class="course-badge">In Progress</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Community Leadership Essentials</h3>
+                        <div class="course-info">
+                            <span>12 lessons</span>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://source.unsplash.com/random/400x200/?digital" alt="Course Image">
+                        <div class="course-badge">New</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Digital Tools for Community Engagement</h3>
+                        <div class="course-info">
+                            <span>8 lessons</span>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.6</span>
+                            </div>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="popular-courses">
+                <div class="section-title">
+                    <h2>Popular Courses</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                
+                <div class="course-list">
+                    <div class="course-item">
+                        <div class="course-item-image">
+                            <img src="https://source.unsplash.com/random/200x100/?volunteer" alt="Course Image">
+                        </div>
+                        <div class="course-item-content">
+                            <h3 class="course-item-title">Volunteer Management</h3>
+                            <div class="course-item-info">
+                                <span>6 lessons</span>
+                                <div class="course-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-item">
+                        <div class="course-item-image">
+                            <img src="https://source.unsplash.com/random/200x100/?sustainability" alt="Course Image">
+                        </div>
+                        <div class="course-item-content">
+                            <h3 class="course-item-title">Sustainable Communities</h3>
+                            <div class="course-item-info">
+                                <span>9 lessons</span>
+                                <div class="course-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-item">
+                        <div class="course-item-image">
+                            <img src="https://source.unsplash.com/random/200x100/?leadership" alt="Course Image">
+                        </div>
+                        <div class="course-item-content">
+                            <h3 class="course-item-title">Effective Leadership</h3>
+                            <div class="course-item-info">
+                                <span>10 lessons</span>
+                                <div class="course-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-item">
+                        <div class="course-item-image">
+                            <img src="https://source.unsplash.com/random/200x100/?digital" alt="Course Image">
+                        </div>
+                        <div class="course-item-content">
+                            <h3 class="course-item-title">Digital Marketing</h3>
+                            <div class="course-item-info">
+                                <span>8 lessons</span>
+                                <div class="course-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <h2>Recommended For You</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://source.unsplash.com/random/400x200/?networking" alt="Course Image">
+                    <div class="course-badge">Popular</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Networking for Community Growth</h3>
+                    <div class="course-info">
+                        <span>7 lessons</span>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load header and navbar
+        fetch('main-header-navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-navbar').innerHTML = data;
+                
+                // Make sure the learn tab is active
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.querySelector('span').textContent === 'Learn') {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+        // Category selection
+        document.querySelectorAll('.category').forEach(category => {
+            category.addEventListener('click', () => {
+                document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
+

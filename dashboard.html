@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WeConnect Dashboard - Your community hub">
+    <title>Dashboard | WeConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E9CCA;
+            --secondary-color: #4CAF50;
+            --accent-color: #25274D;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --dark-bg: #29648A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            padding-bottom: 70px; /* Space for bottom navbar */
+            position: relative;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .welcome-section p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            margin: 0 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-card:first-child {
+            margin-left: 0;
+        }
+        
+        .stat-card:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover .action-icon {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .action-label {
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Include header and navbar -->
+        <div id="header-navbar"></div>
+        
+        <div class="content">
+            <div class="welcome-section">
+                <h2>Welcome back, Alex!</h2>
+                <p>Here's what's happening in your community today.</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>12</h3>
+                    <p>Events</p>
+                </div>
+                <div class="stat-card">
+                    <h3>48</h3>
+                    <p>Members</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5</h3>
+                    <p>Messages</p>
+                </div>
+            </div>
+            
+            <div class="quick-actions">
+                <button class="action-btn">
+                    <div class="action-icon">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <span class="action-label">New Event</span>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <span class="action-label">Invite</span>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <span class="action-label">Message</span>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <span class="action-label">Settings</span>
+                </button>
+            </div>
+            
+            <div class="section-title">
+                <h2>Recent Activity</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Community Meetup</div>
+                        <div class="activity-time">Today, 6:00 PM</div>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Sarah joined your community</div>
+                        <div class="activity-time">Yesterday</div>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">New message from John</div>
+                        <div class="activity-time">2 days ago</div>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Community guidelines updated</div>
+                        <div class="activity-time">1 week ago</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Load header and navbar
+        fetch('main-header-navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-navbar').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
+

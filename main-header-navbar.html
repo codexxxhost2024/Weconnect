@@ -1,0 +1,157 @@
+<header class="main-header">
+    <div class="header-content">
+        <div class="logo-container">
+            <img src="https://example.com/weconnect-logo.png" alt="WeConnect Logo" class="logo">
+            <h1>WeConnect</h1>
+        </div>
+        <div class="header-actions">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <a href="profile.html" class="profile-link">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="profile-img">
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="bottom-navbar">
+    <a href="dashboard.html" class="nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="learn.html" class="nav-item">
+        <i class="fas fa-book"></i>
+        <span>Learn</span>
+    </a>
+    <a href="tools.html" class="nav-item">
+        <i class="fas fa-tools"></i>
+        <span>Tools</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<style>
+    :root {
+        --primary-color: #2E9CCA;
+        --secondary-color: #4CAF50;
+        --accent-color: #25274D;
+        --text-color: #333;
+        --light-bg: #f9f9f9;
+        --dark-bg: #29648A;
+    }
+    
+    .main-header {
+        background-color: white;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+    }
+    
+    .header-content h1 {
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    .header-actions {
+        display: flex;
+        align-items: center;
+    }
+    
+    .notification-btn {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: var(--text-color);
+        position: relative;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--secondary-color);
+        color: white;
+        font-size: 0.7rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .profile-link {
+        display: block;
+    }
+    
+    .profile-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .bottom-navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 480px;
+        margin: 0 auto;
+        z-index: 100;
+    }
+    
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 0.8rem;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-item i {
+        font-size: 1.2rem;
+        margin-bottom: 3px;
+    }
+    
+    .nav-item.active {
+        color: var(--primary-color);
+        opacity: 1;
+    }
+</style>
+

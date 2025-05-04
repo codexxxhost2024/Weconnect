@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WeConnect Tools - Resources for your community">
+    <title>Tools | WeConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E9CCA;
+            --secondary-color: #4CAF50;
+            --accent-color: #25274D;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --dark-bg: #29648A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            padding-bottom: 70px; /* Space for bottom navbar */
+            position: relative;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tool-icon {
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .tool-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .tool-description {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        
+        .tool-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 0;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .recent-tools {
+            margin-bottom: 30px;
+        }
+        
+        .recent-list {
+            list-style: none;
+        }
+        
+        .recent-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+        
+        .recent-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+        
+        .recent-content {
+            flex: 1;
+        }
+        
+        .recent-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .recent-time {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .recent-action {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Include header and navbar -->
+        <div id="header-navbar"></div>
+        
+        <div class="content">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search tools...">
+            </div>
+            
+            <h2 class="section-title">Popular Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Event Planner</h3>
+                        <p class="tool-description">Create and manage community events with ease.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Member Directory</h3>
+                        <p class="tool-description">Find and connect with community members.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Analytics</h3>
+                        <p class="tool-description">Track engagement and growth metrics.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Announcements</h3>
+                        <p class="tool-description">Share important updates with your community.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Task Manager</h3>
+                        <p class="tool-description">Organize and assign tasks to team members.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Resource Library</h3>
+                        <p class="tool-description">Access shared documents and resources.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recent-tools">
+                <h2 class="section-title">Recently Used</h2>
+                <ul class="recent-list">
+                    <li class="recent-item">
+                        <div class="recent-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="recent-content">
+                            <div class="recent-title">Event Planner</div>
+                            <div class="recent-time">Used 2 hours ago</div>
+                        </div>
+                        <div class="recent-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                    <li class="recent-item">
+                        <div class="recent-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="recent-content">
+                            <div class="recent-title">Analytics</div>
+                            <div class="recent-time">Used yesterday</div>
+                        </div>
+                        <div class="recent-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                    <li class="recent-item">
+                        <div class="recent-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="recent-content">
+                            <div class="recent-title">Member Directory</div>
+                            <div class="recent-time">Used 3 days ago</div>
+                        </div>
+                        <div class="recent-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2 class="section-title">Recommended Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-poll"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Survey Creator</h3>
+                        <p class="tool-description">Create surveys to gather feedback from your community.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Community Map</h3>
+                        <p class="tool-description">Visualize your community's geographic distribution.</p>
+                        <a href="#" class="tool-btn">Open</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load header and navbar
+        fetch('main-header-navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-navbar').innerHTML = data;
+                
+                // Make sure the tools tab is active
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.querySelector('span').textContent === 'Tools') {
+                        item.classList.add('active');
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
+

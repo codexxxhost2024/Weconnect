@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WeConnect User Profile - View community member details">
+    <title>User Profile | WeConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E9CCA;
+            --secondary-color: #4CAF50;
+            --accent-color: #25274D;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --dark-bg: #29648A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            padding-bottom: 70px; /* Space for bottom navbar */
+            position: relative;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 30px 15px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-bio {
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-btn i {
+            margin-right: 5px;
+        }
+        
+        .connect-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+        }
+        
+        .message-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .section {
+            margin-top: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .interests-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .interest-tag {
+            background-color: var(--light-bg);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Include header and navbar -->
+        <div id="header-navbar"></div>
+        
+        <div class="profile-header">
+            <button class="back-btn" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Profile" class="profile-pic">
+            <h2 class="profile-name">Sarah Williams</h2>
+            <p class="profile-bio">Digital marketer & community volunteer</p>
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Events</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">243</div>
+                    <div class="stat-label">Connections</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Groups</div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn connect-btn">
+                    <i class="fas fa-user-plus"></i> Connect
+                </button>
+                <button class="action-btn message-btn">
+                    <i class="fas fa-comment"></i> Message
+                </button>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h3 class="section-title">About</h3>
+                <p>Digital marketing specialist with 5+ years of experience. Passionate about community building and volunteering for local causes. Love hiking, photography, and exploring new coffee shops.</p>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">Interests</h3>
+                <div class="interests-list">
+                    <span class="interest-tag">Digital Marketing</span>
+                    <span class="interest-tag">Community Building</span>
+                    <span class="interest-tag">Volunteering</span>
+                    <span class="interest-tag">Photography</span>
+                    <span class="interest-tag">Hiking</span>
+                    <span class="interest-tag">Coffee</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <h3>Recent Activity</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Organized Marketing Workshop</div>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Joined Digital Creators Group</div>
+                            <div class="activity-time">1 week ago</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Shared a photo album</div>
+                            <div class="activity-time">2 weeks ago</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load header and navbar
+        fetch('main-header-navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-navbar').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
+

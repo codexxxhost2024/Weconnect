@@ -1,0 +1,6 @@
+[TASK START]
+Task: WeConnect Rebranding
+Start Time: 2025-03-31 11:48PM
+Description: Rebranding application from "Magnetar" to "WeConnect" with blue and green color scheme.
+Prep: Identify all files requiring updates, prepare color scheme variables, ensure logo consistency.
+
